@@ -12,6 +12,7 @@ Class MarketingManager
 	private $arrChoixFutur = array();
 	private $arrChoixActuel = array();
 	private $arrChoixVehicules = array();
+	private $arrChoixVilles = array();
 
 	public function __construct()
 	{
@@ -27,6 +28,8 @@ Class MarketingManager
 	public function setChoixFutur($arrChoix) { $this->arrChoixFutur = $arrChoix; }
 	public function setChoixActuel($arrChoix) { $this->arrChoixActuel = $arrChoix; }
 	public function setChoixVehicules($arrChoix) { $this->arrChoixVehicules = $arrChoix; }
+	public function setChoixVilles($arrChoix) { $this->arrChoixVilles = $arrChoix; }
+
 
 	public function getAge() { return $this->age; }
 	public function getVille() { return $this->ville; }
@@ -34,6 +37,7 @@ Class MarketingManager
 	public function getChoixActuel() { return $this->arrChoixActuel; }
 	public function getChoixFutur() { return $this->arrChoixFutur; }
 	public function getChoixVehicules() { return $this->arrChoixVehicules; }
+	public function getChoixVilles() { return $this->arrChoixVilles; }
 
 
 	public function setAllChoix()
@@ -44,9 +48,16 @@ Class MarketingManager
 		$sth->execute();
 
 		$result = $sth->fetchAll(PDO::FETCH_ASSOC);
-		
-		foreach ($result as $key => $value) {
-			$arrResult[$key] = $value;
+
+		foreach ($result as $arrData) {
+			foreach ($arrData as $key => $value) {
+				if($key == "id") {
+					$id = $value;
+				}
+				else {
+					$arrResult[$id] = $value;
+				}
+			}
 		}
 
 		$this->setChoixFutur($arrResult);
@@ -67,6 +78,22 @@ Class MarketingManager
 		}
 
 		$this->setChoixVehicules($arrResult);
+	}
+
+	public function setAllVilles()
+	{
+		$arrResult = array();
+
+		$sth = "SELECT ville FROM clients ORDER BY ville";
+		$sth = $this->db->query($sth);
+
+		$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+		
+		foreach ($result as $key => $value) {
+			$arrResult[$key] = $value['ville'];
+		}
+
+		$this->setChoixVilles($arrResult);
 	}
 
 

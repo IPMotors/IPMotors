@@ -7,25 +7,38 @@ Class SelectMarketing
 
 	}
 
-	public function setSelect($arrSelect)
+	public function setSelect($arrSelect,$name)
+	{	
+		$string = "<select name=$name></br>";
+		foreach($arrSelect as $key => $value) {
+			if(!is_numeric($value)) {
+				$string.= "<option name=$key value=$key>$value</option></br>";
+			}
+		}	
+		$string .= "</select></br>";
+		return $string;
+	}
+
+	public function setSelectVehicules($arrSelect,$name)
 	{
 
-		$string = "<select></br>";
+		$string = "<select name=$name></br>";
 		foreach($arrSelect as $value) {
-			$string.= "<option value={$value['id']}>{$value['designation']}</option></br>";
+			$string.= "<option name={$value['id']} value={$value['id']}>{$value['marque']} - {$value['modele']}</option></br>";
 		}
 		$string .= "</select></br>";
 		return $string;
 	}
 
-	public function setSelectVehicules($arrSelect)
+	public function setSelectAge($arrSelect,$name)
 	{
-
-		$string = "<select></br>";
-		foreach($arrSelect as $value) {
-			$string.= "<option value={$value['id']}>{$value['marque']} - {$value['modele']}</option></br>";
+		$string = "<select name=$name></br>";
+		foreach($arrSelect as $key => $value) {
+			$string.= "<option name=$key value=$key>$value</option></br>";
 		}
 		$string .= "</select></br>";
 		return $string;
 	}
+
+
 }
