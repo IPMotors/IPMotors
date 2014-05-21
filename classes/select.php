@@ -7,9 +7,11 @@ Class SelectMarketing
 
 	}
 
-	public function setSelect($arrSelect,$name)
+	public function setSelect($arrSelect,$name,$option = false)
 	{	
-		$string = "<select name=$name></br>";
+		$input_name = $name."_text";
+		$string = "<select onchange=disabledInput('$name','$input_name') name=$name></br>";
+		$string.= $option == true ? "<option name='nothing' selected=selected>Choisir l'ajout</option><br />" : "";
 		foreach($arrSelect as $key => $value) {
 			if(!is_numeric($value)) {
 				$string.= "<option name=$key value=$key>$value</option></br>";
